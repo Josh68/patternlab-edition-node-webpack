@@ -6,8 +6,8 @@ const {getIfUtils, removeEmpty} = require('webpack-config-utils');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const plConfig = require('./patternlab-config.json');
-const patternlab = require('patternlab-node')(plConfig);
-const patternEngines = require('patternlab-node/core/lib/pattern_engines');
+const patternlab = require('@pattern-lab/patternlab-node')(plConfig);
+const patternEngines = require('@pattern-lab/patternlab-node/core/lib/pattern_engines');
 const merge = require('webpack-merge');
 const customization = require(`${plConfig.paths.source.app}/webpack.app.js`);
 
@@ -37,23 +37,25 @@ module.exports = env => {
         // Live reloading in development only
         new webpack.HotModuleReplacementPlugin()
       ),
-      ifProd(
-        new webpack.optimize.UglifyJsPlugin({
-          // Compresses in production any bundle
-          sourceMap: true,
-          uglifyOptions: {
-            mangle: false
-          }
-        })
-      ),
-      new webpack.optimize.CommonsChunkPlugin({
-        // Combines any node module libraries used into their own file
-        name: 'js/pl-vendor-libraries',
-        chunks: ['js/pl-source'],
-        minChunks: module => {
-          return module.context && /node_modules/.test(module.context);
-        }
-      }),
+      // deprecated?
+      // ifProd(
+      //   new webpack.optimize.UglifyJsPlugin({
+      //     // Compresses in production any bundle
+      //     sourceMap: true,
+      //     uglifyOptions: {
+      //       mangle: false
+      //     }
+      //   })
+      // ),
+      //also deprecated
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   // Combines any node module libraries used into their own file
+      //   name: 'js/pl-vendor-libraries',
+      //   chunks: ['js/pl-source'],
+      //   minChunks: module => {
+      //     return module.context && /node_modules/.test(module.context);
+      //   }
+      // }),
       new CopyWebpackPlugin([
         {
           // Copy all images from source to public
@@ -96,12 +98,16 @@ module.exports = env => {
       ]),
       new EventHooksPlugin({
         // Before WebPack compiles, call the pattern build API, once done, bundle continues
-        'before-compile': function(compilationParams, callback){
-          patternlab.build(callback, plConfig.cleanPublic);
+        'beforeCompile': function(compilationParams, callback){
+          const { cleanPublic } = plConfig;
+          //console.log('compilationParams', compilationParams);
+          //console.log('cleanPublic', plConfig.cleanPublic);
+          patternlab.build({cleanPublic})
+            .then(() => callback && callback());
         }
       }),
       new EventHooksPlugin({
-        'after-compile': function(compilation, callback) {  
+        'afterCompile': function(compilation, callback) {
           // watch supported templates
           const supportedTemplateExtensions = patternEngines.getSupportedFileExtensions();
           const templateFilePaths = supportedTemplateExtensions.map(function (dotExtension) {
@@ -127,11 +133,14 @@ module.exports = env => {
               return resolve(filePath);
             });
 
-            compilation.fileDependencies = compilation.fileDependencies.concat(patternFiles);
+            patternFiles.forEach(function addPatternFile(patternFile) {
+              compilation.fileDependencies.add(patternFile);
+            });
           });
 
+          console.log('compilation.fileDependencies', compilation.fileDependencies);
           // signal done and continue with build
-          callback();
+          callback && callback();
         }
       }),
     ]),
@@ -150,7 +159,12 @@ module.exports = env => {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['es2015', { modules: false }]
+                ['@babel/preset-env', { 
+                  "targets": {
+                    "browsers": ["last 2 versions"]
+                  },
+                  "modules": false 
+                }]
               ]
             }
           }]

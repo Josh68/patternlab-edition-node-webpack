@@ -71,6 +71,13 @@
   "serverOptions": {
     "wait": 1000
   },
+  "server": {
+    "url": "http://localhost",
+    "port": 3000
+  },
+  "webpackMerge": {
+    "entry": "replace"
+  },
   "starterkitSubDir": "dist",
   "styleGuideExcludes": [
   ],

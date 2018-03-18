@@ -47,7 +47,10 @@
         "patternSectionSubtype": "./node_modules/@pattern-lab/styleguidekit-mustache-default/views/partials/patternSectionSubtype.mustache",
         "viewall": "./node_modules/@pattern-lab/styleguidekit-mustache-default/views/viewall.mustache"
       },
-      "js" : "./source/js",
+      "js": [
+        "./source/js/",
+        "./source/_patterns/"
+      ],
       "images" : "./source/images",
       "fonts" : "./source/fonts",
       "css" : "./source/css"

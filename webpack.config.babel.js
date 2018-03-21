@@ -137,8 +137,7 @@ module.exports = env => {
               compilation.fileDependencies.add(patternFile);
             });
           });
-
-          console.log('compilation.fileDependencies', compilation.fileDependencies);
+          
           // signal done and continue with build
           callback && callback();
         }

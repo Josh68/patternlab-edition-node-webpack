@@ -3,25 +3,26 @@
   "description": "A pure wrapper around patternlab-node core, the default pattern engine, and supporting frontend assets.",
   "version": "1.0.6",
   "dependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-es2015": "^6.24.1",
-    "copy-webpack-plugin": "^4.2.3",
-    "event-hooks-webpack-plugin": "^1.0.0",
-    "globby": "^6.1.0",
-    "patternlab-node": "^2.11.0",
-    "styleguidekit-assets-default": "^3.5.0",
-    "styleguidekit-mustache-default": "^3.0.0",
-    "webpack": "^3.10.0",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "@pattern-lab/patternengine-node-mustache": "^2.0.0-alpha.2",
+    "@pattern-lab/patternlab-node": "^3.0.0-alpha.8",
+    "@pattern-lab/styleguidekit-assets-default": "^4.0.0-alpha.3",
+    "@pattern-lab/styleguidekit-mustache-default": "^4.0.0-alpha.1",
+    "babel-loader": "^8.0.0-beta.2",
+    "copy-webpack-plugin": "^4.5.1",
+    "event-hooks-webpack-plugin": "^2.0.0",
+    "globby": "^8.0.1",
+    "webpack": "^3.11.0",
     "webpack-config-utils": "^2.3.0",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.2"
   },
   "repository": "git@github.com:Comcast/patternlab-edition-node-webpack.git",
   "bugs": "https://github.com/Comcast/patternlab-edition-node-webpack/issues",
   "author": "Matt Bulfair <Matt_Bulfair@comcast.com>",
   "contributors": [
     "Rodrigo Gualberto <itzdrigz@gmail.com>",
-    "Paul Wright <paul@paintedbicycle.com>" 
+    "Paul Wright <paul@paintedbicycle.com>"
   ],
   "scripts": {
     "start": "npm run patternlab:serve",
@@ -33,14 +34,13 @@
     "patternlab:patternsonly": "node patternlab.js patternsonly",
     "patternlab:liststarterkits": "node patternlab.js liststarterkits",
     "patternlab:loadstarterkit": "node patternlab.js loadstarterkit",
-    "patternlab:installplugin": "node patternlab.js installplugin",
-    "postinstall": "node scripts/postinstall.js"
+    "patternlab:installplugin": "node patternlab.js installplugin"
   },
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=5.0"
+    "node": ">=6.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.9.5"
+    "webpack-dev-server": "^3.1.3"
   }
 }

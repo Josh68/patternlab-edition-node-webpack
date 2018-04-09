@@ -42,6 +42,6 @@
   },
   "devDependencies": {
     "patternlab-node-cli": "github:pattern-lab/patternlab-node-cli",
-    "webpack-dev-server": "3.1.1"
+    "webpack-dev-server": "^2.11.2"
   }
 }

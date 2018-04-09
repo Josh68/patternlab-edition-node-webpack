@@ -29,9 +29,10 @@ function help(){
 }
 
 function patternsonly() {
-  function noop(){}
-
-  patternlab.patternsonly(noop, plConfig.cleanPublic);
+  patternlab.patternsonly(plConfig) //TODO - gotta figure out the promise way to do this correctly
+  //never returned anything, so this might be just fine
+    .then(console.log('pattern only build complete'))
+    .catch(e => console.log('pattern only build failed'));
 }
 
 function liststarterkits() {

@@ -1,7 +1,8 @@
 // NOTE: named arguments passed to npm scripts must be prefixed with '--'
 //       e.g. npm run loadstarterkit -- --kit=some-kit-name --clean
 const plConfig = require('./patternlab-config.json');
-const patternlab = require('patternlab-node')(plConfig);
+const Patternlab = require('@pattern-lab/patternlab-node/core/lib/patternlab');
+const patternlab = new Patternlab(plConfig);
 
 function getConfiguredCleanOption() {
   return plConfig.cleanPublic;

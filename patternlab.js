@@ -1,8 +1,7 @@
 // NOTE: named arguments passed to npm scripts must be prefixed with '--'
 //       e.g. npm run loadstarterkit -- --kit=some-kit-name --clean
 const plConfig = require('./patternlab-config.json');
-const Patternlab = require('@pattern-lab/patternlab-node/core/lib/patternlab');
-const patternlab = new Patternlab(plConfig);
+const patternlab = require('@pattern-lab/patternlab-node')(plConfig);
 
 function getConfiguredCleanOption() {
   return plConfig.cleanPublic;
@@ -10,14 +9,23 @@ function getConfiguredCleanOption() {
 
 function build(done) {
   done = done || function(){};
-
-  const buildResult = patternlab.build(() => {}, getConfiguredCleanOption());
+  // Copied from core, for reference
+  /**
+   * Builds patterns, copies assets, and constructs user interface
+   * 
+   * @param {object} options an object used to control build behavior
+   * @param {bool} options.cleanPublic whether or not to delete the configured output location (usually `public/`) before build
+   * @param {object} options.data additional data to be merged with global data prior to build
+   * @param {bool} options.watch whether or not Pattern Lab should watch configured `source/` directories for changes to rebuild
+   * @returns {Promise} a promise fulfilled when build is complete
+  */
+  const buildResult = patternlab.build({cleanPublic: getConfiguredCleanOption()});
 
   // handle async version of Pattern Lab
   if (buildResult instanceof Promise) {
     return buildResult.then(done);
   }
-
+  // this should never happen with v3
   return null;
 }
 

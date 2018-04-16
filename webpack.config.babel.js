@@ -6,8 +6,8 @@ const {getIfUtils, removeEmpty} = require('webpack-config-utils');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const plConfig = require('./patternlab-config.json');
-const Patternlab = require('@pattern-lab/patternlab-node/core/lib/patternlab');
-const patternlab = new Patternlab(plConfig);
+const cleanPublic = plConfig.cleanPublic;
+const patternlab = require('@pattern-lab/patternlab-node')(plConfig);
 const patternEngines = require('@pattern-lab/patternlab-node/core/lib/pattern_engines');
 const merge = require('webpack-merge');
 const customization = require(`${plConfig.paths.source.app}/webpack.app.js`);
@@ -55,6 +55,8 @@ module.exports = env => {
           return module.context && /node_modules/.test(module.context);
         }
       }),
+      // All copying and watching now done by core
+      // TBD how this integrates with a webpack pipeline, e.g., for loading SASS, Babel, etc
       // new CopyWebpackPlugin([
       //   {
       //     // Copy all images from source to public
@@ -99,7 +101,7 @@ module.exports = env => {
         // Before WebPack compiles, call the pattern build API, once done, bundle continues
         'before-compile': function(compilationParams, callback){
           //patternlab.build(callback, plConfig.cleanPublic);
-          patternlab.build(plConfig.cleanPublic)
+          patternlab.build({cleanPublic})
             .then(callback)
             .catch(e => console.error('Patternlab build error:', error));
         }

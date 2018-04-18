@@ -1,7 +1,7 @@
 {
   "name": "edition-node-webpack",
   "description": "A pure wrapper around patternlab-node core, the default pattern engine, and supporting frontend assets.",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "dependencies": {
     "@babel/core": "^7.0.0-beta.44",
     "@babel/preset-env": "^7.0.0-beta.44",
@@ -39,6 +39,19 @@
   "license": "Apache-2.0",
   "engines": {
     "node": ">=6.0"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "modules": "commonjs",
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
   },
   "devDependencies": {
     "patternlab-node-cli": "github:pattern-lab/patternlab-node-cli",

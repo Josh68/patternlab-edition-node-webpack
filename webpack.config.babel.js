@@ -98,8 +98,8 @@ module.exports = env => {
       //   }
       // ]),
       new EventHooksPlugin({
-        // Before WebPack compiles, call the pattern build API, once done, bundle continues
-        'before-compile': function(compilationParams, callback){
+        // After WebPack compiles, call the pattern build API, once done, bundle continues
+        'after-compile': function(compilationParams, callback){
           //patternlab.build(callback, plConfig.cleanPublic);
           patternlab.build({cleanPublic})
             .then(callback)

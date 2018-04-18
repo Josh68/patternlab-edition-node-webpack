@@ -45,7 +45,7 @@
   "defaultShowPatternInfo": false,
   "cleanPublic" : true,
   "patternExtension": "mustache",
-  "debug": false,
+  "logLevel": "info",
   "ishControlsHide": {
     "s": false,
     "m": false,

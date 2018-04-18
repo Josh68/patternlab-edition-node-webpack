@@ -60,3 +60,6 @@ typings/
 #compiled assets
 public
 
+# IDE settings
+.vscode
+

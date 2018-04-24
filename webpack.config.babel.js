@@ -101,9 +101,7 @@ module.exports = env => {
         // After WebPack compiles, call the pattern build API, once done, bundle continues
         'after-compile': function(compilationParams, callback){
           //patternlab.build(callback, plConfig.cleanPublic);
-          patternlab.build({cleanPublic})
-            .then(callback)
-            .catch(e => console.error('Patternlab build error:', error));
+          patternlab.server.reload();
         }
       }),
       // new EventHooksPlugin({

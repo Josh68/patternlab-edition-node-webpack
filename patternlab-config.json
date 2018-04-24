@@ -82,5 +82,6 @@
     "markupOnly": ".markup-only"
   },
   "cleanOutputHtml": true,
-  "exportToGraphViz": false
+  "exportToGraphViz": false,
+  "transformedAssetTypes": ["scss"]
 }

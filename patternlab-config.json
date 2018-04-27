@@ -83,5 +83,5 @@
   },
   "cleanOutputHtml": true,
   "exportToGraphViz": false,
-  "transformedAssetTypes": ["scss"]
+  "transformedAssetTypes": ["scss, js"]
 }

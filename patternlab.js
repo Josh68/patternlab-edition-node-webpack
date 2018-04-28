@@ -29,6 +29,17 @@ function build(done) {
   return null;
 }
 
+function buildFrontEnd(done) {
+  //see build for reference
+  done = done || function () { }; //fallback void
+  const buildFrontEndResult = patternlab.buildFrontEnd({ cleanPublic: getConfiguredCleanOption() });
+  if (buildFrontEndResult instanceof Promise) {
+    return buildFrontEndResult.then(done);
+  }
+  // this should never happen with v3
+  return null;
+}
+
 function version() {
   patternlab.version();
 }
@@ -65,6 +76,9 @@ for (var i=0; i < process.argv.length; i++) {
   switch (process.argv[i]) {
     case 'build':
       build();
+      break;
+    case: 'buildFrontEnd':
+      buildFrontEnd();
       break;
     case 'version':
       version();

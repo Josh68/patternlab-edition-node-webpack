@@ -72,7 +72,7 @@ function installplugin(plugin) {
 }
 
 function serve() {
-  patternlab.server.serve({
+  patternlab.server().serve({
     cleanPublic: getConfiguredCleanOption()
   });
 }

@@ -4,9 +4,9 @@ var fs = require('fs-extra');
 
 /* Updating for v3 */
 
-var sm = require('@pattern-lab/patternlab-node/core/lib/starterkit_manager');
-var pm = require('@pattern-lab/patternlab-node/core/lib/plugin_manager');
-var log = require('@pattern-lab/patternlab-node/core/lib/log');
+var sm = require('@pattern-lab/core/lib/starterkit_manager');
+var pm = require('@pattern-lab/core/lib/plugin_manager');
+var log = require('@pattern-lab/core/lib/log');
 
 // get the config
 var configPath = path.resolve(process.cwd(), 'patternlab-config.json');

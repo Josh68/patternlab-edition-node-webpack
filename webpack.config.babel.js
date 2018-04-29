@@ -6,8 +6,8 @@ const { getIfUtils, removeEmpty } = require('webpack-config-utils');
 const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const plConfig = require('./patternlab-config.json');
 const cleanPublic = plConfig.cleanPublic;
-const patternlab = require('@pattern-lab/patternlab-node')(plConfig);
-const patternEngines = require('@pattern-lab/patternlab-node/core/lib/pattern_engines');
+const patternlab = require('@pattern-lab/core')(plConfig);
+const patternEngines = require('@pattern-lab/core/lib/pattern_engines');
 const merge = require('webpack-merge');
 const customization = require(`${plConfig.paths.source.app}/webpack.app.js`);
 

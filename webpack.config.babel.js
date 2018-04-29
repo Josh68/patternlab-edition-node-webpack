@@ -7,7 +7,6 @@ const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const plConfig = require('./patternlab-config.json');
 const cleanPublic = plConfig.cleanPublic;
 const patternlab = require('@pattern-lab/core')(plConfig);
-const patternEngines = require('@pattern-lab/core/lib/pattern_engines');
 const merge = require('webpack-merge');
 const customization = require(`${plConfig.paths.source.app}/webpack.app.js`);
 
@@ -57,17 +56,16 @@ module.exports = env => {
       }),
       new EventHooksPlugin({
         'after-compile': function (compilation, callback) {
-          patternlab.buildFrontEnd(
+          patternlab.buildFrontend(
             {
               cleanPublic,
               //watch: bool,
               //data: object
-            },
-            patternlab
-          )
+            }
+          ).then(callback);
 
           // signal done and continue with build
-          callback();
+          //callback();
         }
       }),
     ]),

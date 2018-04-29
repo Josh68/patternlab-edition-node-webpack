@@ -29,10 +29,10 @@ function build(done) {
   return null;
 }
 
-function buildFrontEnd(done) {
+function buildFrontend(done) {
   //see build for reference
   done = done || function () { }; //fallback void
-  const buildFrontEndResult = patternlab.buildFrontEnd({ cleanPublic: getConfiguredCleanOption() });
+  const buildFrontEndResult = patternlab.buildFrontend({ cleanPublic: getConfiguredCleanOption() });
   if (buildFrontEndResult instanceof Promise) {
     return buildFrontEndResult.then(done);
   }

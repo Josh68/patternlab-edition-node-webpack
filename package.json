@@ -7,7 +7,7 @@
     "@babel/core": "^7.0.0-beta.44",
     "@babel/preset-env": "^7.0.0-beta.44",
     "@pattern-lab/patternengine-node-mustache": "^2.0.0-alpha.2",
-    "@pattern-lab/patternlab-node": "git+https://git@github.com/Josh68/patternlab-node.git#future/3.0",
+    "@pattern-lab/core": "git+https://git@github.com/Josh68/patternlab-node.git#future/3.0",
     "@pattern-lab/styleguidekit-assets-default": "^4.0.0-alpha.3",
     "@pattern-lab/styleguidekit-mustache-default": "^4.0.0-alpha.1",
     "babel-loader": "^8.0.0-beta.2",

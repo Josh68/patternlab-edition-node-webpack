@@ -71,9 +71,18 @@ function installplugin(plugin) {
   patternlab.installplugin(plugin);
 }
 
+function serve() {
+  patternlab.server.serve({
+    cleanPublic: getConfiguredCleanOption()
+  });
+}
+
 for (var i=0; i < process.argv.length; i++) {
   
   switch (process.argv[i]) {
+    case 'serve':
+      serve();
+      break;
     case 'build':
       build();
       break;

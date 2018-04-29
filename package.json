@@ -29,7 +29,7 @@
     "start": "npm run patternlab:serve",
     "webpack:version": "webpack --v",
     "patternlab:build": "webpack --env.prod -p",
-    "patternlab:serve": "webpack --env.dev",
+    "patternlab:serve": "webpack --env.dev && node patternlab.js serve",
     "patternlab:version": "node patternlab.js version",
     "patternlab:help": "node patternlab.js help",
     "patternlab:patternsonly": "node patternlab.js patternsonly",

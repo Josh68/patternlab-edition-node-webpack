@@ -86,8 +86,8 @@ for (var i=0; i < process.argv.length; i++) {
     case 'build':
       build();
       break;
-    case: 'buildFrontEnd':
-      buildFrontEnd();
+    case: 'buildFrontend':
+      buildFrontend();
       break;
     case 'version':
       version();

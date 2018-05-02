@@ -1,30 +1,30 @@
 // webpack.config.js
 const webpack = require('webpack');
-const { resolve } = require('path');
+const {resolve} = require('path');
 const globby = require('globby');
-const { getIfUtils, removeEmpty } = require('webpack-config-utils');
+const {getIfUtils, removeEmpty} = require('webpack-config-utils');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const plConfig = require('./patternlab-config.json');
-const cleanPublic = plConfig.cleanPublic;
-const patternlab = require('@pattern-lab/core')(plConfig);
+const patternlab = require('patternlab-node')(plConfig);
+const patternEngines = require('patternlab-node/core/lib/pattern_engines');
 const merge = require('webpack-merge');
 const customization = require(`${plConfig.paths.source.app}/webpack.app.js`);
 
 module.exports = env => {
-  const { ifProd, ifDev } = getIfUtils(env);
-  const assetsToWatch = plConfig.transformedAssetTypes.join('|');
-
+  const {ifProd, ifDev} = getIfUtils(env);
+  
   const config = merge.smartStrategy(plConfig.webpackMerge)({
     devtool: ifDev('source-map'),
     context: resolve(__dirname, 'source'),
     node: {
       fs: "empty"
     },
-    entry: {
+    entry: { 
       // Gathers any Source JS files and creates a bundle
       //NOTE: This name can be changed, if so, make sure to update _meta/01-foot.mustache
-      "js/pl-source":
-        globby.sync([resolve(plConfig.paths.source.js + '**/*.js')]).map(function (filePath) {
+      "js/pl-source": 
+          globby.sync([resolve(plConfig.paths.source.js + '**/*.js')]).map(function (filePath) {
           return filePath;
         })
     },
@@ -78,19 +78,11 @@ module.exports = env => {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['es2015', { modules: false }]
+                ['@babel/preset-env', { modules: false }]
               ]
             }
           }]
         }
-      ]
-    },
-    // set up watch with specific options for dev only, in place of devServer, whose duties will now be handled by patternlab-node
-    watch: ifDev(true),
-    watchOptions: {
-      ignored: [
-        /node_modules/,
-        `source/**/*.!(${assetsToWatch})`
       ]
     }
   }, customization(env))

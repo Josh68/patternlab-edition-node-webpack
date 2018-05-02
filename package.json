@@ -22,6 +22,7 @@
   "bugs": "https://github.com/Comcast/patternlab-edition-node-webpack/issues",
   "author": "Matt Bulfair <Matt_Bulfair@comcast.com>",
   "contributors": [
+    "Josh Schneider <josh68@gmail.com>",
     "Rodrigo Gualberto <itzdrigz@gmail.com>",
     "Paul Wright <paul@paintedbicycle.com>"
   ],
@@ -29,7 +30,7 @@
     "start": "npm run patternlab:serve",
     "webpack:version": "webpack --v",
     "patternlab:build": "webpack --env.prod -p",
-    "patternlab:serve": "webpack --env.dev && node patternlab.js serve",
+    "patternlab:serve": "node patternlab.js serve && webpack --env.dev",
     "patternlab:version": "node patternlab.js version",
     "patternlab:help": "node patternlab.js help",
     "patternlab:patternsonly": "node patternlab.js patternsonly",
@@ -44,7 +45,7 @@
   "babel": {
     "presets": [
       [
-        "env",
+        "@babel/preset-env",
         {
           "modules": "commonjs",
           "targets": {

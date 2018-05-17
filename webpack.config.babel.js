@@ -4,7 +4,8 @@ const {resolve} = require('path');
 const globby = require('globby');
 const {getIfUtils, removeEmpty} = require('webpack-config-utils');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const EventHooksPlugin = require('event-hooks-webpack-plugin');
+const EmitPlugin = require('./plugins/emit-plugin');
+const AfterEmitPlugin = require('./plugins/after-emit-plugin');
 const plConfig = require('./patternlab-config.json');
 const patternlab = require('patternlab-node')(plConfig);
 const patternEngines = require('patternlab-node/core/lib/pattern_engines');
@@ -94,40 +95,8 @@ module.exports = env => {
           flatten: true
         }
       ]),
-      new EventHooksPlugin({
-        'after-emit': function(compilation, callback) {  
-          // watch supported templates
-          const supportedTemplateExtensions = patternEngines.getSupportedFileExtensions();
-          const templateFilePaths = supportedTemplateExtensions.map(function (dotExtension) {
-            return plConfig.paths.source.patterns + '/**/*' + dotExtension;
-          });
-
-          // additional watch files
-          const watchFiles = [
-            plConfig.paths.source.patterns + '/**/*.json',
-            plConfig.paths.source.patterns + '**/*.md',
-            plConfig.paths.source.data + '**/*.json',
-            plConfig.paths.source.fonts + '**/*',
-            plConfig.paths.source.images + '**/*',
-            plConfig.paths.source.js + '**/*',
-            plConfig.paths.source.meta + '**/*',
-            plConfig.paths.source.annotations + '**/*'
-          ];
-
-          const allWatchFiles = watchFiles.concat(templateFilePaths);
-
-          allWatchFiles.forEach(function(globPath) {
-            const patternFiles = globby.sync(globPath).map(function (filePath) {
-              return resolve(filePath);
-            });
-
-            compilation.fileDependencies = compilation.fileDependencies.concat(patternFiles);
-          });
-
-          // continue with build and trigger callback when done
-          patternlab.build(callback, plConfig.cleanPublic);
-        }
-      }),
+      new EmitPlugin({ patternEngines, plConfig }),
+      new AfterEmitPlugin({ patternlab, plConfig })
     ]),
     devServer: {
       contentBase: resolve(__dirname, plConfig.paths.public.root),
